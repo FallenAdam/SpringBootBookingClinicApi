@@ -1,4 +1,4 @@
-package com.example.assignment03.configure;
+package com.example.assignment03.security;
 
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.modelmapper.ModelMapper;

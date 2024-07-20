@@ -1,4 +1,4 @@
-package com.example.assignment03.configure;
+package com.example.assignment03.security;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

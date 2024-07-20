@@ -1,11 +1,13 @@
-package com.example.assignment03.configure;
+package com.example.assignment03.security;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,12 +19,17 @@ public class JwtTokenUtil {
     public static final long JWT_TOKEN_VALIDITY = 70000;
 
 //    @Value("${jwt.secret}")
-    private String secret="abc123456";
+private static final Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
     //retrieve username from jwt token
     public String getUsernameFromToken(String token) {
-        return getClaimFromToken(token, Claims::getSubject);
-    }
+
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.getSubject();    }
 
     //retrieve expiration date from jwt token
     public Date getExpirationDateFromToken(String token) {
@@ -35,7 +42,7 @@ public class JwtTokenUtil {
     }
     //for retrieveing any information from token we will need the secret key
     private Claims getAllClaimsFromToken(String token) {
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
     }
 
     //check if the token has expired
@@ -56,7 +63,7 @@ public class JwtTokenUtil {
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
-                .signWith(SignatureAlgorithm.HS512, secret)
+                .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
     }
 

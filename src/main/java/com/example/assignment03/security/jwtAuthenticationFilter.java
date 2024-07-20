@@ -1,4 +1,4 @@
-package com.example.assignment03.configure;
+package com.example.assignment03.security;
 
 import com.example.assignment03.service.impl.UserService;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-public class JwtRequestFilter extends OncePerRequestFilter {
+public class jwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
     private UserService userService;
