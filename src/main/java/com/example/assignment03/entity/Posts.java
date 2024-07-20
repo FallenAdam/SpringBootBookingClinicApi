@@ -1,12 +1,18 @@
 package com.example.assignment03.entity;
 
-import lombok.Data;
+import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+import lombok.experimental.FieldDefaults;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "Posts")
 @Data
@@ -15,51 +21,51 @@ public class Posts implements Serializable {
     @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+     int id;
 
     @Column(name = "TITLE")
-    private String title;
+     String title;
 
     @Column(name = "CONTENMARKDOWN")
-    private String contentMarkdown;
+     String contentMarkdown;
 
     @Column(name = "CONTENHTML")
-    private String contentHtml;
+     String contentHtml;
 
     @ManyToOne
     @JoinColumn(name = "FOR_DOCTOR_ID")
-    private User doctorId;
+     User doctorId;
 
     @ManyToOne
     @JoinColumn(name = "FOR_SPECIALIZATION_ID")
-    private Specializations specializations;
+     Specializations specializations;
 
     @ManyToOne
     @JoinColumn(name = "FOR_CLINIC_ID")
-    private Clinics clinics;
+     Clinics clinics;
 
     @ManyToOne
     @JoinColumn(name = "FOR_PATIENT_ID")
-    private  Patients patients;
+      Patients patients;
 
     @Column(name = "DATE_TIME_BOOKING")
-    private Date dateTimeBooking;
+     Date dateTimeBooking;
 
     @Column(name = "CONFIRM_BY_DOCTOR")
-    private int confirmByDoctor;
+     int confirmByDoctor;
 
     @Column(name = "IMAGE")
-    private String image;
+     String image;
 
     @Column(name = "CREATE_AT")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createAt;
+     Date createAt;
 
     @Column(name = "DELETE_AT")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date deleteAt;
+     Date deleteAt;
 
     @Column(name = "UPDATE_AT")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updateAt;
+     Date updateAt;
 }

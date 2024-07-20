@@ -1,7 +1,7 @@
 package com.example.assignment03.controller;
 
 
-import com.example.assignment03.security.JwtTokenUtil;
+import com.example.assignment03.security.JwtGenerator;
 import com.example.assignment03.form.LoginForm;
 import com.example.assignment03.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private JwtGenerator jwtGenerator;
 
     @Autowired
     private UserService userService;
@@ -36,7 +36,7 @@ public class AuthController {
         UserDetails userDetails = userService
                 .loadUserByUsername(request.getEmail());
 
-        String token = jwtTokenUtil.generateToken(userDetails);
+        String token = jwtGenerator.generateToken(userDetails);
 
         return ResponseEntity.ok("Token :" + token);
     }

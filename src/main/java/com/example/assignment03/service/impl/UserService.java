@@ -4,7 +4,8 @@ import com.example.assignment03.dto.Profile;
 import com.example.assignment03.dto.UserLoginDTO;
 import com.example.assignment03.entity.Appointments;
 import com.example.assignment03.entity.User;
-import com.example.assignment03.exception.BasicException;
+import com.example.assignment03.exception.AppException;
+import com.example.assignment03.exception.ErrorCode;
 import com.example.assignment03.form.CreateUserForm;
 import com.example.assignment03.form.FormChangePassword;
 import com.example.assignment03.repository.IAppointmentsRepository;
@@ -122,7 +123,7 @@ public class UserService implements IUserService {
             }
                 userRepository.save(user);
         }else {
-            throw BasicException.NOT_FOUND.addError("Không tìm thấy ID : "+ id);
+            throw  new AppException(ErrorCode.NOT_FOUND);
         }
     }
 
@@ -131,14 +132,14 @@ public class UserService implements IUserService {
         // Add User
         Optional<User> optionalUser = userRepository.findById(id);
         if (!optionalUser.isPresent()){
-            throw BasicException.NOT_FOUND.addError("Không tìm thấy ID : "+ id);
+            throw new AppException(ErrorCode.NOT_FOUND);
         }
         Profile.UserDTO userDTO = new Profile.UserDTO(optionalUser.get());
 
         // Add Schedules
         List<Appointments> appointments = appointmentsRepository.findAllByPatientsId(id);
         if (appointments.isEmpty()){
-            throw BasicException.NOT_FOUND.addError("Không tìm thấy Appointments");
+            throw  new AppException(ErrorCode.NOT_FOUND);
         }
         List<Profile.AppointmentsDTO> appointmentsDTOS = new ArrayList<>();
         for (Appointments app : appointments){

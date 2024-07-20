@@ -1,35 +1,41 @@
 package com.example.assignment03.entity;
 
-import lombok.Data;
+import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+import lombok.experimental.FieldDefaults;
+
 import java.io.Serializable;
 import java.util.Date;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "Statuses")
 @Data
 public class Status implements Serializable {
-    private static final long serialVersionUID = 1L;
+     static final long serialVersionUID = 1L;
 
     @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+     int id;
 
     @Column(name = " `NAME`")
-    private String name;
+     String name;
 
     @Column(name = "CREATE_AT")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createAt;
+     Date createAt;
 
     @Column(name = "DELETE_AT")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date deleteAt;
+     Date deleteAt;
 
     @Column(name = "UPDATE_AT")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updateAt;
+     Date updateAt;
 
 }

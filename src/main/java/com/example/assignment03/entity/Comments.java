@@ -1,56 +1,62 @@
 package com.example.assignment03.entity;
 
-import lombok.Data;
+import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+import lombok.experimental.FieldDefaults;
+
 import java.io.Serializable;
 import java.util.Date;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "Comments")
 @Data
 public class Comments implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+     static final long serialVersionUID = 1L;
 
     @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+     int id;
 
     @Column(name = "TIMEBOOKING")
-    private String timeBooking;
+     String timeBooking;
 
     @Column(name = "DATEBOOKING")
-    private String dateBooking;
+     String dateBooking;
 
     @Column(name = " `NAME`")
-    private String name;
+     String name;
 
     @Column(name = "PHONE")
-    private String phone;
+     String phone;
 
     @Column(name = "CONTENT")
-    private String content;
+     String content;
 
     @Column(name = "`STATUS`")
-    private int status;
+     int status;
 
     @ManyToOne
     @JoinColumn(name = "DOCTOR_ID")
-    private User doctorId;
+     User doctorId;
 
     @Column(name = "CREATE_AT")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createAt;
+     Date createAt;
 
     @Column(name = "DELETE_AT")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date deleteAt;
+     Date deleteAt;
 
     @Column(name = "UPDATE_AT")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updateAt;
+     Date updateAt;
 
 
 

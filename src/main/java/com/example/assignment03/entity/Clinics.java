@@ -1,48 +1,54 @@
 package com.example.assignment03.entity;
 
-import lombok.Data;
+import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+import lombok.experimental.FieldDefaults;
+
 import java.io.Serializable;
 import java.util.Date;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "Clinics")
 @Data
 public class Clinics implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+     static final long serialVersionUID = 1L;
 
     @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+     int id;
 
     @Column(name = " `NAME`")
-    private String name;
+     String name;
 
     @Column(name = "ADDRESS")
-    private String address;
+     String address;
 
     @Column(name = "PHONE")
-    private String phone;
+     String phone;
 
     @Column(name = "INTRODUCTIONHTML")
-    private String introductionHtml;
+     String introductionHtml;
 
     @Column(name = "INTRODUCTIONMARKDOWN")
-    private String introductionMarkDown;
+     String introductionMarkDown;
 
     @Column(name = "`DESCRIPTION`")
-    private String description;
+     String description;
 
     @Column(name = "IMAGE")
-    private String image;
+     String image;
 
     @Column(name = "COST_OF_EXAMINATION")
-    private String costOfExamination;
+     String costOfExamination;
 
     @Column(name = "CREATE_AT")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createAt;
+     Date createAt;
 }

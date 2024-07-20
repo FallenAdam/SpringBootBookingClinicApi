@@ -1,10 +1,16 @@
 package com.example.assignment03.entity;
 
-import lombok.Data;
+import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+import lombok.experimental.FieldDefaults;
+
 import java.io.Serializable;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "Patients")
 @Data
@@ -13,33 +19,33 @@ public class Patients implements Serializable {
     @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+     int id;
 
     @Column(name = " `STATUS`")
-    private int status;
+     int status;
 
     @Column(name = " `NAME`")
-    private String name;
+     String name;
 
     @Column(name = "GENDER")
-    private String gender;
+     String gender;
 
     @Column(name = "PHONE")
-    private String phone;
+     String phone;
 
     @Column(name = "ADDRESS")
-    private String address;
+     String address;
 
     @Column(name = " DATE_OF_BIRTH")
-    private String dateOfBirth;
+     String dateOfBirth;
 
     @Column(name = "PATHOLOGICAL")
-    private String pathological;
+     String pathological;
 
     @Column(name = "`DESCRIBE`")
-    private String describe;
+     String describe;
 
     @ManyToOne
     @JoinColumn(name = "DOCTOR_ID")
-    private User doctor;
+     User doctor;
 }

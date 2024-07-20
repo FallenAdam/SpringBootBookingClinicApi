@@ -4,22 +4,34 @@ import io.jsonwebtoken.security.Keys;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import static com.example.assignment03.security.SecurityConstants.secretKey;
+
 @Component
-public class JwtTokenUtil {
-
-    public static final long JWT_TOKEN_VALIDITY = 70000;
-
+public class JwtGenerator {
+//
 //    @Value("${jwt.secret}")
-private static final Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+//    private String secret;
+//
+//    private Key key;
+//
+//    @PostConstruct
+//    public void init() {
+//       secretKey = Keys.hmacShaKeyFor(Base64.getDecoder().decode(secret));
+//    }
+
 
     //retrieve username from jwt token
     public String getUsernameFromToken(String token) {
@@ -62,14 +74,21 @@ private static final Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS512)
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.JWT_EXPIRATION*1000))
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
     }
 
     //validate token
-    public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = getUsernameFromToken(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder()
+                    .setSigningKey(secretKey)
+                    .build()
+                    .parseClaimsJws(token);
+            return true;
+        } catch (Exception ex) {
+            throw new AuthenticationCredentialsNotFoundException("JWT was expired or incorrect", ex);
+        }
     }
 }

@@ -15,8 +15,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Multipart;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 

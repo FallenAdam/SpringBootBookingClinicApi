@@ -3,7 +3,7 @@ package com.example.assignment03.service;
 import com.itextpdf.text.DocumentException;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.mail.MessagingException;
+import jakarta.mail.MessagingException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 

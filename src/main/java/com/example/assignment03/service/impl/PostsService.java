@@ -2,7 +2,8 @@ package com.example.assignment03.service.impl;
 
 import com.example.assignment03.dto.PostsDTO;
 import com.example.assignment03.entity.*;
-import com.example.assignment03.exception.BasicException;
+import com.example.assignment03.exception.AppException;
+import com.example.assignment03.exception.ErrorCode;
 import com.example.assignment03.form.CreatePostForm;
 import com.example.assignment03.repository.*;
 import com.example.assignment03.service.IPostsService;
@@ -91,10 +92,10 @@ public class PostsService implements IPostsService {
           posts = postsOptional.get();
         }
         if (posts.getConfirmByDoctor()!=0)
-            throw BasicException.INVALID_ARGUMENT.addError("Yêu cầu đã được xác nhận!");
+            throw new AppException(ErrorCode.INVALID_ARGUMENT);
         posts.setConfirmByDoctor(status);
         if (status == 2 && StringUtils.isEmpty(content))
-            throw BasicException.INVALID_ARGUMENT.addError("Vui lòng nhập lý do!");
+            throw new AppException(ErrorCode.INVALID_NOTE);
         posts.setContentHtml(content);
         // Lưu lại
         postsRepository.save(posts);
@@ -104,13 +105,13 @@ public class PostsService implements IPostsService {
     public PostsDTO viewAppointmentsUserByAdmin(int id){
         Optional<Patients> patientsOptional = patientsRepository.findById(id);
         if (!patientsOptional.isPresent()){
-            throw BasicException.NOT_FOUND.addError("Không tìm thấy ID :" + id);
+            throw new  AppException(ErrorCode.NOT_FOUND);
 //            throw  new RuntimeException("Not Found ID :" + id);
         }
         PostsDTO.PatientDTO patientsDTO = new PostsDTO.PatientDTO(patientsOptional.get());
        List<Posts> posts =  postsRepository.findAllByPatientsId(patientsOptional.get().getId());
         if (posts.isEmpty()){
-            throw BasicException.NOT_FOUND.addError("Không tìm thấy bài Post");
+            throw  new AppException(ErrorCode.NOT_FOUND);
         }
         List<PostsDTO.PostDTO> postDTOS = new ArrayList<>();
         for (Posts app : posts){
