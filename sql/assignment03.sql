@@ -354,4 +354,6 @@ VALUES         (     2     ,'Supported'  ,'2023-10-10' , '2023-12-25'  ,'2023-12
                (    10     , 'Supported' ,'2023-08-17' , '2023-10-18'  ,'2023-11-30'),
                (     5     ,'Supported'  ,'2023-09-20' , '2023-10-19'  ,'2023-12-30'),
                (     6     ,'Supported'  ,'2023-08-25' , '2023-09-20'  ,'2023-10-15');
-                              
+
+ALTER TABLE Users
+    ADD COLUMN token VARCHAR(255) DEFAULT NULL;
