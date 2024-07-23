@@ -2,6 +2,7 @@ package com.example.assignment03.dto;
 
 import com.example.assignment03.entity.Patients;
 import com.example.assignment03.entity.Schedules;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.util.List;
@@ -33,7 +34,8 @@ public class PatientsDTO {
     @Data
     public static class PatDTO{
     private Integer id;
-    private String name;
+        @Size(min = 3,message = "USERNAME_INVALID")
+        private String name;
     private String gender;
     private String address;
     private String pathological;

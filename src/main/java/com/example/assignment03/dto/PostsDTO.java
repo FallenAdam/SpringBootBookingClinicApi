@@ -2,6 +2,7 @@ package com.example.assignment03.dto;
 
 import com.example.assignment03.entity.Patients;
 import com.example.assignment03.entity.Posts;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class PostsDTO {
     @Data
     public static class PostDTO{
         private String title;
+        @Size(min = 3,message = "USERNAME_INVALID")
         private String doctorName;
         private String specializationsName;
         private String clinicsName;

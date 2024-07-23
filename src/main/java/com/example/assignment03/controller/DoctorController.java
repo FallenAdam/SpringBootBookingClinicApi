@@ -41,7 +41,6 @@ public class DoctorController {
 
     // Nhận/hủy lịch khám của bệnh nhân
     @PostMapping("/changeConfirmByDoctor")
-    @PreAuthorize("hasAnyAuthority('Doctor')")
     public ResponseEntity<Void> changeConfirmByDoctor(@RequestParam int id, @RequestParam int status, @RequestParam String content) {
         postsService.changeConfirmByDoctor(id, status, content);
         return ResponseEntity.ok().build();
@@ -49,7 +48,6 @@ public class DoctorController {
 
     // Lấy ra danh sách bệnh nhân của 1 bác sĩ
     @GetMapping("/getPatience")
-    @PreAuthorize("hasAnyAuthority('Doctor')")
     public Page<PatientForDoctorDTO> getAllPatient(Pageable pageable) {
             Page<PatientForDoctorDTO> patientDTOS = patientsService.getListPatientByDoctorId(pageable);
             return patientDTOS;

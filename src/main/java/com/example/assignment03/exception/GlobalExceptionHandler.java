@@ -3,6 +3,7 @@ package com.example.assignment03.exception;
 import com.example.assignment03.dto.response.ApiResponse;
 import jakarta.validation.ConstraintViolation;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -60,15 +61,15 @@ public class GlobalExceptionHandler {
         try {
             errorCode = ErrorCode.valueOf(enumKey);
 
-            var constraintViolation =
-                    exception.getBindingResult().getAllErrors().getFirst().unwrap(ConstraintViolation.class);
+            ConstraintViolation<?> constraintViolation =
+                    exception.getBindingResult().getAllErrors().get(0).unwrap(ConstraintViolation.class);
 
             attributes = constraintViolation.getConstraintDescriptor().getAttributes();
 
             log.info(attributes.toString());
 
         } catch (IllegalArgumentException e) {
-
+            log.error("Invalid enum key: " + enumKey, e);
         }
 
         ApiResponse apiResponse = new ApiResponse();
@@ -81,7 +82,6 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.badRequest().body(apiResponse);
     }
-
     private String mapAttribute(String message, Map<String, Object> attributes) {
         String minValue = String.valueOf(attributes.get(MIN_ATTRIBUTE));
 

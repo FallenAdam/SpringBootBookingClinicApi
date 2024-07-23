@@ -39,7 +39,6 @@ public class AdminController {
 
     // Nếu Status bằng 1 thì chuyển về 0( Mở -> khóa)
     @PostMapping("/lock-account")
-    @PreAuthorize("hasAnyAuthority('Admin')")
     public ResponseEntity<String> lockPatients(@RequestParam int id, @RequestParam String description) {
         userService.lockOrUnlockUser(id,description, true);
         return ResponseEntity.ok("Đã khóa tài khoản !");
@@ -47,7 +46,6 @@ public class AdminController {
 
     // Nếu Status bằng 0 thì chuyển về 1(khóa -> mở)
     @PostMapping("/unLock-account")
-    @PreAuthorize("hasAnyAuthority('Admin')")
     public ResponseEntity<String> unLockPatients(@RequestParam int id, @RequestParam String description) {
         userService.lockOrUnlockUser(id ,description, false);
         return ResponseEntity.ok("Đã mở tài khoản !");
@@ -57,32 +55,28 @@ public class AdminController {
 
     // Create Account Doctor
     @PostMapping("/create-Doctor")
-    @PreAuthorize("hasAnyAuthority('Admin')")
     public ResponseEntity<String> createDoctor(@RequestBody CreateUserForm form) {
         userService.createDoctor(form);
         return ResponseEntity.ok("Taọ tài khoản Bác sĩ thành công .");
     }
 
 
-    // Admin check lịch sử khám bệnh của bệnh nhâ
-    @GetMapping("/check-AppointmentsUserByAdmin")
-    @PreAuthorize("hasAnyAuthority('Admin')")
+    // Admin check lịch sử khám bệnh của bệnh nhân
+    @GetMapping("/AdminCheck-AppointmentsUser")
     public ResponseEntity<?> viewAppointmentsUserByAdmin(@RequestParam int id){
        PostsDTO postDTOS = postsService.viewAppointmentsUserByAdmin(id);
        return new ResponseEntity<>(postDTOS, HttpStatus.OK);
     }
 
     // Admin check lịch sử khám bệnh của bác sĩ
-    @GetMapping("/check-AppointmentsDoctorByAdmin")
-    @PreAuthorize("hasAnyAuthority('Admin')")
+    @GetMapping("/AdminCheck-AppointmentsDoctor")
     public PatientsDTO viewAppointmentsDoctorByAdmin(@RequestParam int id){
         PatientsDTO patientsDTO = schedulesService.viewAppointmentsDoctorByAdmin(id);
         return patientsDTO;
     }
 
     // Gửi thông tin về email cá nhân của bệnh nhân
-    @PostMapping("/send-email-with-attachment")
-    @PreAuthorize("hasAnyAuthority('Admin')")
+    @PostMapping("/send-email")
     public ResponseEntity<String> sendEmailWithAttachment(@RequestParam String to,
                                                           @RequestParam String subject,
                                                           @RequestParam String text,

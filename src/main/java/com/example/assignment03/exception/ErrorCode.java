@@ -1,8 +1,6 @@
 package com.example.assignment03.exception;
 
-import jdk.jfr.snippets.Snippets;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 
@@ -21,6 +19,7 @@ public enum ErrorCode {
     NOT_FOUND(1009, "Resource not found ", HttpStatus.NOT_FOUND),
     INVALID_ARGUMENT(10010, "Invalid argument, this post may yet be confirmed", HttpStatus.BAD_REQUEST),
     INVALID_NOTE(1011, "Invalid note, please rewrite your note again", HttpStatus.BAD_REQUEST),
+    DISABLED_ACCESS(1012, "Access denied", HttpStatus.FORBIDDEN),
 
     ;
 

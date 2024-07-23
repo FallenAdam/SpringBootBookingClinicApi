@@ -1,5 +1,6 @@
 package com.example.assignment03.entity;
 
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import jakarta.persistence.*;
@@ -31,6 +32,7 @@ public class User implements Serializable {
     @Column(name = " EMAIL")
      String email;
 
+    @Size(min = 8, message = "INVALID_PASSWORD")
     @Column(name = "`PASSWORD`")
      String password;
 

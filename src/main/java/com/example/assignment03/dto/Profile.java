@@ -3,6 +3,7 @@ package com.example.assignment03.dto;
 import com.example.assignment03.entity.Appointments;
 import com.example.assignment03.entity.Schedules;
 import com.example.assignment03.entity.User;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class Profile {
     @Data
     public static class UserDTO{
         private int id;
+        @Size(min = 3,message = "USERNAME_INVALID")
         private String name;
         private String gender;
         private String email;
